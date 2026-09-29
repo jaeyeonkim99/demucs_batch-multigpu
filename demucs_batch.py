@@ -78,6 +78,12 @@ def parse_args():
         help="Metadata JSON of input files (e.g. total_metadata_v3_music_filtered.json)",
     )
     parser.add_argument(
+        "--audio_root",
+        default="",
+        type=str,
+        help="Root directory of the audio; metadata wav_path is relative to it",
+    )
+    parser.add_argument(
         "--output",
         "-o",
         required=True,
@@ -120,7 +126,7 @@ if __name__ == "__main__":
 
     input_paths = []
     for key, item in metadata.items():
-        input_paths.append(Path(item["wav_path"]))
+        input_paths.append(Path(args.audio_root) / item["wav_path"])
 
     start = time.time()
     print(f"Total files to process: {len(input_paths)}")
