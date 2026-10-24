@@ -17,7 +17,7 @@ from tqdm import tqdm
 
 from .apply import BagOfModels, apply_model
 from .audio import save_audio
-from .data_utils import DemucsDataSet, get_size, load_track
+from .data_utils import DemucsDataSet
 from .htdemucs import HTDemucs
 from .pretrained import ModelLoadingError, add_model_flags, get_model_from_args
 
@@ -266,14 +266,11 @@ def main(opts=None):
             sources *= stds[k]
             sources += means[k]
             track = Path(tracks[k])
-            # print("Saving ", str(track.name))
             info = torchaudio.info(str(track))
             actual_num_samples = int(
                 info.num_frames * model.samplerate / info.sample_rate
             )
 
-            # subdir = track.relative_to(Path(args.clone_subdir)).parent
-            # subdir = track.stem
             if args.stem is None:
                 for source, name in zip(sources, model.sources):
                     stem = out / args.filename.format(
@@ -299,7 +296,6 @@ def main(opts=None):
                 sources = list(sources)
                 stem = (
                     out
-                    / subdir
                     / args.filename.format(
                         track=track.name.rsplit(".", 1)[0],
                         trackext=track.name.rsplit(".", 1)[-1],
@@ -315,7 +311,6 @@ def main(opts=None):
                     other_stem += i
                 stem = (
                     out
-                    / subdir
                     / args.filename.format(
                         track=track.name.rsplit(".", 1)[0],
                         trackext=track.name.rsplit(".", 1)[-1],
@@ -335,7 +330,6 @@ def main(opts=None):
                 sources = list(sources)
                 stem = (
                     out
-                    / subdir
                     / args.filename.format(
                         track=track.name.rsplit(".", 1)[0],
                         trackext=track.name.rsplit(".", 1)[-1],
@@ -358,7 +352,6 @@ def main(opts=None):
                     other_stem += i
                 stem = (
                     out
-                    / subdir
                     / args.filename.format(
                         track=track.name.rsplit(".", 1)[0],
                         trackext=track.name.rsplit(".", 1)[-1],

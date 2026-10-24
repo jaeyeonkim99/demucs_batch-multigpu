@@ -130,7 +130,7 @@ if __name__ == "__main__":
 
     start = time.time()
     print(f"Total files to process: {len(input_paths)}")
-    print(f"Start Demixing...")
+    print("Start Demixing...")
     demix_paths = demix(
         paths=input_paths,
         demix_dir=Path(args.output),
@@ -141,7 +141,7 @@ if __name__ == "__main__":
     )
     end = time.time()
 
-    print(f"Demixing completed.")
+    print("Demixing completed.")
     print(
         f"Total files processed: {len(input_paths)}, Total files demixed: {len(demix_paths)}"
     )
